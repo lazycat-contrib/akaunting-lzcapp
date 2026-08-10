@@ -1,18 +1,17 @@
 package: lazycat.community.app.akaunting
-version: 3.1.19
+version: 3.1.21
 name: Akaunting
 description: Online Accounting Software
 min_os_version: 1.5.0
 homepage: https://github.com/akaunting/akaunting
 author: akaunting
-
 locales:
-    zh:
-        name: "Akaunting"
-        description: "一款免费、开源的在线会计软件"
-    zh_CN:
-        name: "Akaunting"
-        description: "一款免费、开源的在线会计软件"
-    en:
-        name: "Akaunting"
-        description: "Online accounting software. Manage your money. Get invoices paid. Track expenses."
+  zh:
+    name: "Akaunting"
+    description: "一款免费、开源的在线会计软件"
+  zh_CN:
+    name: "Akaunting"
+    description: "一款免费、开源的在线会计软件"
+  en:
+    name: "Akaunting"
+    description: "Online accounting software. Manage your money. Get invoices paid. Track expenses."

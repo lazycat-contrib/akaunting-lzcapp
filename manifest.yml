@@ -1,47 +1,45 @@
 application:
-    subdomain: akaunting
-    background_task: true
-    public_path:
-        - /
-    upstreams:
-        - location: /
-          backend: http://akaunting:80/
+  subdomain: akaunting
+  background_task: true
+  public_path:
+    - /
+  upstreams:
+    - location: /
+      backend: http://akaunting:80/
 services:
-    akaunting:
-        # docker.io/akaunting/akaunting:3.1.19-v
-        image: registry.lazycat.cloud/czyt/akaunting/akaunting:08ac12d4fd435042
-        environment:
+  akaunting:
+    # docker.io/akaunting/akaunting:3.1.19-v
+    # upstream: docker.io/akaunting/akaunting:3.1.21-v
+    image: registry.lazycat.cloud/czyt/akaunting/akaunting:3b0d5c3a53046b42
+    environment:
  {{if .U.enable_custom_domain}}
-            - APP_URL={{.U.custom_domain}}
+      - APP_URL={{.U.custom_domain}}
 {{else}}
-            - APP_URL=https://{{.S.AppDomain}}
+      - APP_URL=https://{{.S.AppDomain}}
 {{end}}
-            - DB_HOST=akaunting_db
-            - DB_DATABASE=akaunting
-            - DB_PORT=3306
-
-            # Change these to match env/db.env
-            - DB_USERNAME=admin
-            - DB_PASSWORD={{ stable_secret "db_password" }}
-
-            # You should change this to a random string of three numbers or letters followed by an underscore
-            - DB_PREFIX=lzc_
-
-        depends_on:
-            - akaunting_db
-
-    akaunting_db:
-        # docker.io/library/mariadb:11.8-noble
-        image: registry.lazycat.cloud/czyt/library/mariadb:ef81e8580aca17f5
-        environment:
-            - MYSQL_DATABASE=akaunting
-            - MYSQL_USER=admin
-            - MYSQL_PASSWORD={{ stable_secret "db_password" }}
-            - MYSQL_RANDOM_ROOT_PASSWORD=yes
-        binds:
-            - /lzcapp/var/db:/var/lib/mysql
-        healthcheck:
-            test:
-                - CMD-SHELL
-                - healthcheck.sh --connect --innodb_initialized
-            start_period: 30s
+      - DB_HOST=akaunting_db
+      - DB_DATABASE=akaunting
+      - DB_PORT=3306
+      # Change these to match env/db.env
+      - DB_USERNAME=admin
+      - DB_PASSWORD={{ stable_secret "db_password" }}
+      # You should change this to a random string of three numbers or letters followed by an underscore
+      - DB_PREFIX=lzc_
+    depends_on:
+      - akaunting_db
+  akaunting_db:
+    # docker.io/library/mariadb:11.8-noble
+    # upstream: docker.io/library/mariadb:11.8.8-noble
+    image: registry.lazycat.cloud/czyt/library/mariadb:becd01f45b1f37c8
+    environment:
+      - MYSQL_DATABASE=akaunting
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD={{ stable_secret "db_password" }}
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+    binds:
+      - /lzcapp/var/db:/var/lib/mysql
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - healthcheck.sh --connect --innodb_initialized
+      start_period: 30s
