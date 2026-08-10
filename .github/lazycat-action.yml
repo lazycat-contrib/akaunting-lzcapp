@@ -1,0 +1,62 @@
+version: 1
+
+project:
+  root: .
+  build_config: lzc-build.yml
+  package_file: package.yml
+  output: dist/application.lpk
+  target_arch: amd64
+
+update:
+  strategy: publish
+  allow_downgrade: false
+  version_source:
+    type: image
+    image: akaunting
+
+build:
+  run_buildscript: false
+
+images:
+  - id: akaunting
+    target: service
+    service: akaunting
+    source: docker.io/akaunting/akaunting
+    channel: stable
+    sort: semver
+    tag_regex: '^\d+\.\d+\.\d+-v$'
+    version_regex: '^(?P<version>\d+\.\d+\.\d+)-v$'
+    version_template: '{version}'
+    delivery:
+      mode: lazycat
+
+  - id: mariadb
+    target: service
+    service: akaunting_db
+    source: docker.io/library/mariadb
+    channel: custom
+    sort: semver
+    tag_regex: '^11\.8\.\d+-noble$'
+    version_regex: '^(?P<version>11\.8\.\d+)-noble$'
+    version_template: '{version}'
+    delivery:
+      mode: lazycat
+
+stores:
+  official:
+    enabled: true
+    skip_if_version_exists: true
+    create_if_missing: true
+    changelog_locales: [zh, en]
+    retry:
+      enabled: false
+    application:
+      language: zh
+      name: Akaunting
+      source: https://github.com/akaunting/akaunting
+      source_author: akaunting
+  private:
+    enabled: true
+    skip_if_version_exists: true
+    name: Akaunting
+    summary: 由 GitHub Actions 自动发布
