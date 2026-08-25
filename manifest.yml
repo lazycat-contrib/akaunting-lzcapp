@@ -29,8 +29,8 @@ services:
       - akaunting_db
   akaunting_db:
     # docker.io/library/mariadb:11.8-noble
-    # upstream: docker.io/library/mariadb:11.8.8-noble
-    image: registry.lazycat.cloud/czyt/library/mariadb:becd01f45b1f37c8
+    # upstream: docker.io/library/mariadb:11.8.9-noble
+    image: registry.lazycat.cloud/czyt/library/mariadb:e15e7be553baa9d2
     environment:
       - MYSQL_DATABASE=akaunting
       - MYSQL_USER=admin
