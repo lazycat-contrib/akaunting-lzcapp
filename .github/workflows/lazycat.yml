@@ -10,7 +10,7 @@ on:
       - manifest.yml
       - package.yml
   schedule:
-    - cron: "19 17 * * *"
+    - cron: "19 21 * * *"
   workflow_dispatch:
 
 permissions:
