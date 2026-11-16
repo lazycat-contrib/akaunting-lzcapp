@@ -9,8 +9,8 @@ application:
 services:
   akaunting:
     # docker.io/akaunting/akaunting:3.1.19-v
-    # upstream: docker.io/akaunting/akaunting:3.3.0-v
-    image: registry.lazycat.cloud/czyt/akaunting/akaunting:cd1b2df2ae037486
+    # upstream: docker.io/akaunting/akaunting:3.3.1-v
+    image: registry.lazycat.cloud/czyt/akaunting/akaunting:bdfff0f97f70d340
     environment:
  {{if .U.enable_custom_domain}}
       - APP_URL={{.U.custom_domain}}
